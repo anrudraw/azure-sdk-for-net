@@ -61,9 +61,9 @@ jobs:
       container: $(Container)
 
     steps:
-      # Variables do not support rich types, so add platform matrix entry PreSteps here
       - ${{ each platform in parameters.Platforms }}:
           ${{ if eq(platform.key, variables['PlatformKey']) }}:
+            ${{ if platform.PreSteps }}:
             - ${{ platform.PreSteps }}
 
       - ${{ parameters.PreSteps }}
