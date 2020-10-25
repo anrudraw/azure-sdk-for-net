@@ -39,13 +39,11 @@ jobs:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
         ${{ each platform in parameters.Platforms }}:
-          foo: bar
-            #          ${{ platform.key }}:
-            #            DisplayName: ${{ platform.value.DisplayName }}
-            #            OSVmImage: ${{ platform.value.OSVmImage }}
-            #            TestTargetFramework: ${{ platform.value.TestTargetFramework }}
-            #            PlatformPreSteps: ${{ platform.value.PreSteps }}
-            #            TestMode: ${{ platform.value.TestMode }}
+          ${{ platform.key }}:
+            DisplayName: ${{ platform.value.DisplayName }}
+            OSVmImage: ${{ platform.value.OSVmImage }}
+            TestTargetFramework: ${{ platform.value.TestTargetFramework }}
+            TestMode: ${{ platform.value.TestMode }}
 
     condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('$(TestMode)', 'Record')))
     displayName: $(DisplayName)
