@@ -2,9 +2,6 @@ parameters:
 - name: Clouds
   type: string
   default: 'AzureCloud,AzureCloud_Preview'
-- name: AdditionalPlatforms
-  type: object
-  default: []
 - name: Platforms
   type: object
   default: []
@@ -82,7 +79,8 @@ stages:
         parameters:
           AdditionalParameters: ${{ parameters.AdditionalParameters }}
           Platforms:
-            ${{ each platform in parameters.AdditionalPlatforms }}:
+            ${{ each platform in parameters.Platforms }}:
+              # Only run this platform against the clouds specified in its parameter config
               ${{ if contains(platform.value.RunInClouds, cloud.key) }}:
                 ${{ platform.key }}: ${{ platform.value }}
           CloudConfig:

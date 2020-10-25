@@ -49,9 +49,9 @@ stages:
         TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
-      AdditionalPlatforms:
-        - ${{ parameters.AdditionalPlatforms }}
       Platforms: 
+        ${{ each platform in parameters.AdditionalPlatforms }}:
+          ${{ platform.key }}: ${{ platform.value }}
         Linux_NetCore:
           DisplayName: "Test on Linux"
           OSVmImage: "ubuntu-18.04"
