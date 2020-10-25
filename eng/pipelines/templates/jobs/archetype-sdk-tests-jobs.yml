@@ -62,8 +62,8 @@ jobs:
 
     steps:
       - ${{ each platform in parameters.Platforms }}:
-          ${{ if eq(platform.key, variables['PlatformKey']) }}:
-            ${{ if platform.PreSteps }}:
+        - ${{ if eq(platform.key, variables['PlatformKey']) }}:
+          - ${{ if platform.PreSteps }}:
             - ${{ platform.PreSteps }}
 
       - ${{ parameters.PreSteps }}
