@@ -40,10 +40,10 @@ jobs:
       matrix:
         ${{ each platform in parameters.Platforms }}:
           ${{ platform.key }}:
+            PlatformKey: ${{ platform.key }}
             DisplayName: ${{ platform.value.DisplayName }}
             OSVmImage: ${{ platform.value.OSVmImage }}
             TestTargetFramework: ${{ platform.value.TestTargetFramework }}
-            # PlatformPreSteps: ${{ platform.value.PreSteps }}
             TestMode: ${{ platform.value.TestMode }}
 
     condition: and(succeededOrFailed(), eq(eq(variables['Record'], 'true'), eq('$(TestMode)', 'Record')))
@@ -61,8 +61,10 @@ jobs:
       container: $(Container)
 
     steps:
-      - ${{ if variables['PlatformPreSteps'] }}:
-        - $(PlatformPreSteps)
+      # Variables do not support rich types, so add platform matrix entry PreSteps here
+      - ${{ each platform in parameters.Platforms }}:
+          ${{ if eq(platform.key, variables['PlatformKey']) }}:
+            - ${{ platform.PreSteps }}
 
       - ${{ parameters.PreSteps }}
 
