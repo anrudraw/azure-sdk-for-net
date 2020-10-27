@@ -29,7 +29,8 @@ parameters:
 stages:
   - ${{ each cloud in parameters.CloudConfig }}:
     # By default enable all cloud stages for manual runs, so as to defer to the stage picker in the UI
-    - ${{ if or(eq(variables['Build.Reason'], 'Manual'), contains('${{ parameters.Clouds }}', '${{ cloud.key }}')) }}:
+    # - ${{ if or(eq(variables['Build.Reason'], 'Manual'), contains('${{ parameters.Clouds }}', '${{ cloud.key }}')) }}:
+    - ${{ if "true" }}:
       - stage: ${{ cloud.key }}
         dependsOn: []
         jobs:
