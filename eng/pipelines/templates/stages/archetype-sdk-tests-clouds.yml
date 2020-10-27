@@ -29,22 +29,20 @@ parameters:
 stages:
   - ${{ each cloud in parameters.CloudConfig }}:
     # By default enable all cloud stages for manual runs, so as to defer to the stage picker in the UI
-    # - ${{ if or(eq(variables['Build.Reason'], 'Manual'), contains('${{ parameters.Clouds }}', '${{ cloud.key }}')) }}:
-    # - ${{ if or(eq(variables['Build.Reason'], 'Manual'), contains(parameters.Clouds, cloud.key)) }}:
-    - ${{ if contains(cloud.key, 'AzureCloud') }}:
-      - stage: ${{ cloud.key }}_${{ variables['Build.QueuedBy'] }}
-        dependsOn: []
-        jobs:
-        - template: ../jobs/archetype-sdk-tests-platforms.yml
-          parameters:
-            AdditionalParameters: ${{ parameters.AdditionalParameters }}
-            Platforms:
-              ${{ each platform in parameters.Platforms }}:
-                # Only run this platform against the clouds specified in its parameter config.
-                # An empty/missing parameter default to run in all clouds.
-                ${{ if contains(cloud.key, coalesce(platform.value.SupportedClouds, join(',', parameters.CloudConfig))) }}:
-                  ${{ platform.key }}: ${{ platform.value }}
-            CloudConfig:
-              DisplayName: ${{ cloud.key }}
-              SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
-              Location: ${{ cloud.value.Location }}
+    - stage: ${{ cloud.key }}
+      condition: or(eq(variables['Build.Reason'], 'Manual'), contains('${{ parameters.Clouds }}', '${{ cloud.key }}'))
+      dependsOn: []
+      jobs:
+      - template: ../jobs/archetype-sdk-tests-platforms.yml
+        parameters:
+          AdditionalParameters: ${{ parameters.AdditionalParameters }}
+          Platforms:
+            ${{ each platform in parameters.Platforms }}:
+              # Only run this platform against the clouds specified in its parameter config.
+              # An empty/missing parameter default to run in all clouds.
+              ${{ if contains(cloud.key, coalesce(platform.value.SupportedClouds, join(',', parameters.CloudConfig))) }}:
+                ${{ platform.key }}: ${{ platform.value }}
+          CloudConfig:
+            DisplayName: ${{ cloud.key }}
+            SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+            Location: ${{ cloud.value.Location }}
