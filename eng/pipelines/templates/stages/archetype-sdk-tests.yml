@@ -58,34 +58,29 @@ stages:
           TestTargetFramework: netcoreapp2.1
           PreSteps:
             - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-          RunInClouds: 'AzureCloud,AzureCloud_Preview,AzureUsGovCloud'
         Windows_NetCore:
           DisplayName: "Test on Windows for NetCoreApp"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          RunInClouds: 'AzureCloud,AzureCloud_Canary,AzureUsGovCloud'
         Windows_NetCore_ProjectRefAzureClients:
           DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-          RunInClouds: 'AzureCloud,AzureChinaCloud'
         Windows_NetFramework:
           DisplayName: "Test on Windows for .Net Framework"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          RunInClouds: 'AzureCloud,AzureChinaCloud'
         Windows_NetFramework_ProjectRefAzureClients:
           DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-          RunInClouds: 'AzureCloud,AzureUsGovCloud'
         MacOS:
           DisplayName: "Test on MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          RunInClouds: 'AzureCloud'
+          SupportedClouds: 'AzureCloud'
         Windows_NetCore_Record:
           DisplayName: "Record on Windows for NetCoreApp"
           OSVmImage: "windows-2019"
@@ -104,4 +99,4 @@ stages:
               inputs:
                 pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
                 artifactName: SessionRecords
-          RunInClouds: 'AzureCloud'
+          SupportedClouds: 'AzureCloud'

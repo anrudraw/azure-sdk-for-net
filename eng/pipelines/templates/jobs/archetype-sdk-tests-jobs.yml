@@ -61,10 +61,10 @@ jobs:
       container: $(Container)
 
     steps:
+      # Non-string types aren't accepted as matrix variables, so select PreSteps here
       - ${{ each platform in parameters.Platforms }}:
-        - ${{ if eq(platform.key, variables['PlatformKey']) }}:
-          - ${{ if platform.PreSteps }}:
-            - ${{ platform.PreSteps }}
+        - ${{ if and(eq(platform.key, variables['PlatformKey']), platform.PreSteps) }}:
+          - ${{ platform.PreSteps }}
 
       - ${{ parameters.PreSteps }}
 
