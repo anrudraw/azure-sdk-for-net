@@ -15,15 +15,15 @@ parameters:
   default:
     AzureCloud:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-test)
-    AzureCloud_Preview:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
-    AzureCloud_Canary:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
-      Location: 'eastus2euap'
-    AzureUsGovCloud:
-      SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
-    AzureChinaCloud:
-      SubscriptionConfiguration: $(sub-config-cn-test-resources-test)
+    #  AzureCloud_Preview:
+    #    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
+    #  AzureCloud_Canary:
+    #    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview-test)
+    #    Location: 'eastus2euap'
+    #  AzureUsGovCloud:
+    #    SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
+    #  AzureChinaCloud:
+    #    SubscriptionConfiguration: $(sub-config-cn-test-resources-test)
 
 
 stages:
@@ -35,10 +35,7 @@ stages:
       - template: ../jobs/archetype-sdk-tests-platforms.yml
         parameters:
           AdditionalParameters: ${{ parameters.AdditionalParameters }}
-          Platforms:
-            ${{ each platform in parameters.Platforms }}:
-              ${{ if contains(cloud.key, coalesce(platform.value.SupportedClouds, join(',', parameters.CloudConfig))) }}:
-                ${{ platform.key }}: ${{ platform.value }}
+          Platforms: ${{ parameters.Platforms }}
           CloudConfig:
             DisplayName: ${{ cloud.key }}
             SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}

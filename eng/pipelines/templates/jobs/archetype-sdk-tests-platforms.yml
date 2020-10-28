@@ -12,7 +12,10 @@ parameters:
 jobs:
 - template: ./archetype-sdk-tests-jobs.yml
   parameters:
-    Platforms: ${{ parameters.Platforms }}
+    Platforms:
+      ${{ each platform in parameters.Platforms }}:
+        ${{ if contains(cloud.key, coalesce(platform.value.SupportedClouds, join(',', parameters.CloudConfig))) }}:
+          ${{ platform.key }}: ${{ platform.value }}
     CloudConfig: ${{ parameters.CloudConfig }}
     ${{ each param in parameters.AdditionalParameters }}:
       ${{ param.key }}: ${{ param.value }}
