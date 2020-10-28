@@ -79,7 +79,6 @@ jobs:
           Location: ${{ parameters.CloudConfig.Location }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
-          ArmTemplateParameters: ${{ parameters.CloudConfig.ArmTemplateParameters }}
 
       - script: >
           dotnet test eng/service.proj
@@ -100,7 +99,7 @@ jobs:
           AZURE_TEST_MODE: "${{ coalesce(variables['TestMode'], 'None') }}"
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
-          ${{ each v in parameters.CloudConfig.EnvVars }}:
+          ${{ each v in parameters.CloudConfig.SubscriptionConfiguration.EnvironmentVariables }}:
             ${{ v.key }}: ${{ v.value }}
 
       - template: /eng/common/TestResources/remove-test-resources.yml

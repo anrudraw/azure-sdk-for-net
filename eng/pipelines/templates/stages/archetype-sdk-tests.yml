@@ -34,7 +34,7 @@ parameters:
   default: []
 - name: Clouds
   type: string
-  default: 'AzureCloud,AzureCloud_Preview'
+  default: 'AzureCloud'
 
 stages:
   - template: ./archetype-sdk-tests-clouds.yml

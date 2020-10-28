@@ -1,7 +1,7 @@
 parameters:
 - name: Clouds
   type: string
-  default: 'AzureCloud,AzureCloud_Preview'
+  default: 'AzureCloud'
 - name: Platforms
   type: object
   default: []
