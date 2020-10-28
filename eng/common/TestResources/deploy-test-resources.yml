@@ -21,16 +21,26 @@ steps:
   - template: /eng/common/TestResources/setup-az-modules.yml
 
   - pwsh: |
+      eng/common/TestResources/Import-AzModules.ps1
+
       $subscriptionConfiguration = @"
         ${{ parameters.SubscriptionConfiguration }}
       "@ | ConvertFrom-Json -AsHashtable;
+
+      ${{ if parameters.ArmTemplateParameters }}:
+        $additionalParameters = ${{ parameters.ArmTemplateParameters }}
+      ${{ if parameters.SubscriptionConfiguration.ArmTemplateParameters }}:
+        $additionalParameters = @{
+          ${{ each param in parameters.SubscriptionConfiguration.ArmTemplateParameters }}:
+            ${{ param.key }}: "${{ param.value }}";
+        }
 
       eng/common/TestResources/New-TestResources.ps1 `
         -BaseName 'Generated' `
         -ServiceDirectory ${{ parameters.ServiceDirectory }} `
         -Location '${{ parameters.Location }}' `
         -DeleteAfterHours ${{ parameters.DeleteAfterHours }} `
-        -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+        -AdditionalParameters $additionalParameters `
         @subscriptionConfiguration `
         -CI `
         -Force `

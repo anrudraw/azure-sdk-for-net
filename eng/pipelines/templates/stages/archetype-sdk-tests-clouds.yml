@@ -35,7 +35,10 @@ stages:
       - template: ../jobs/archetype-sdk-tests-platforms.yml
         parameters:
           AdditionalParameters: ${{ parameters.AdditionalParameters }}
-          Platforms: ${{ parameters.Platforms }}
+          Platforms:
+            ${{ each platform in parameters.Platforms }}:
+              ${{ if contains(cloud.key, coalesce(platform.value.SupportedClouds, join(',', parameters.CloudConfig))) }}:
+                ${{ platform.key }}: ${{ platform.value }}
           CloudConfig:
             DisplayName: ${{ cloud.key }}
             SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
