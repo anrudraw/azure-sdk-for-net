@@ -195,6 +195,7 @@ if (getBasicDtResponse.GetRawResponse().Status == (int)HttpStatusCode.OK)
 
     Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
         $"ETag: {basicDt.ETag}\n\t" +
+        $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
         $"Prop1: {basicDt.Contents["Prop1"]}\n\t" +
         $"Prop2: {basicDt.Contents["Prop2"]}\n\t" +
         $"Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t" +
@@ -211,6 +212,7 @@ Response<CustomDigitalTwin> getCustomDtResponse = await client.GetDigitalTwinAsy
 CustomDigitalTwin customDt = getCustomDtResponse.Value;
 Console.WriteLine($"Retrieved and deserialized digital twin {customDt.Id}:\n\t" +
     $"ETag: {customDt.ETag}\n\t" +
+    $"ModelId: {customDt.Metadata.ModelId}\n\t" +
     $"Prop1: {customDt.Prop1}\n\t" +
     $"Prop2: {customDt.Prop2}\n\t" +
     $"ComponentProp1: {customDt.Component1.ComponentProp1} last updated {customDt.Component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +

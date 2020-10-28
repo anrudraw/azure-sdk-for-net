@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core.Samples
         public string ETag { get; set; }
 
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
+        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
 
         [JsonPropertyName("Prop1")]
         public string Prop1 { get; set; }

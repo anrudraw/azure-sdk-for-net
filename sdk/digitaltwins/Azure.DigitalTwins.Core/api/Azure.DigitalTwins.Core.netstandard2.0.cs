@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
-        public Azure.DigitalTwins.Core.BasicDigitalTwinMetadata Metadata { get { throw null; } set { } }
+        public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
     public partial class BasicDigitalTwinComponent
     {
@@ -19,14 +19,6 @@ namespace Azure.DigitalTwins.Core
         public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Metadata { get { throw null; } set { } }
-    }
-    public partial class BasicDigitalTwinMetadata
-    {
-        public BasicDigitalTwinMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
-        public string ModelId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonExtensionDataAttribute]
-        public System.Collections.Generic.IDictionary<string, object> PropertyMetadata { get { throw null; } set { } }
     }
     public partial class BasicRelationship
     {
@@ -61,6 +53,20 @@ namespace Azure.DigitalTwins.Core
     {
         public DeleteRelationshipOptions() { }
         public string IfMatch { get { throw null; } set { } }
+    }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.DigitalTwins.Core.DigitalTwinMetadataJsonConverter))]
+    public partial class DigitalTwinMetadata
+    {
+        public DigitalTwinMetadata() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$model")]
+        public string ModelId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> PropertyMetadata { get { throw null; } set { } }
+    }
+    public partial class DigitalTwinMetadataJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.DigitalTwins.Core.DigitalTwinMetadata>
+    {
+        public DigitalTwinMetadataJsonConverter() { }
+        public override Azure.DigitalTwins.Core.DigitalTwinMetadata Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.DigitalTwins.Core.DigitalTwinMetadata value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public partial class DigitalTwinPropertyMetadata
     {

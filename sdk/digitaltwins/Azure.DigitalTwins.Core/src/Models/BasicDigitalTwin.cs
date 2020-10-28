@@ -66,6 +66,7 @@ namespace Azure.DigitalTwins.Core
     ///
     ///     Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
     ///         $&quot;ETag: {basicDt.ETag}\n\t&quot; +
+    ///         $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
     ///         $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]}\n\t&quot; +
     ///         $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]}\n\t&quot; +
     ///         $&quot;Component1 metadata: {component1[DigitalTwinsJsonPropertyNames.DigitalTwinMetadata]}\n\t&quot; +
@@ -93,7 +94,7 @@ namespace Azure.DigitalTwins.Core
         /// This field is present on every digital twin.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
-        public BasicDigitalTwinMetadata Metadata { get; set; } = new BasicDigitalTwinMetadata();
+        public DigitalTwinMetadata Metadata { get; set; } = new DigitalTwinMetadata();
 
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
