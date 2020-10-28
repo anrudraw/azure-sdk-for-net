@@ -58,45 +58,45 @@ stages:
           TestTargetFramework: netcoreapp2.1
           PreSteps:
             - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
-        Windows_NetCore:
-          DisplayName: "Test on Windows for NetCoreApp"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-        Windows_NetCore_ProjectRefAzureClients:
-          DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: netcoreapp2.1
-          AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-        Windows_NetFramework:
-          DisplayName: "Test on Windows for .Net Framework"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-        Windows_NetFramework_ProjectRefAzureClients:
-          DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
-          OSVmImage: "windows-2019"
-          TestTargetFramework: net461
-          AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
-        MacOS:
-          DisplayName: "Test on MacOS"
-          OSVmImage: "macOS-10.15"
-          TestTargetFramework: netcoreapp2.1
-          SupportedClouds: 'AzureCloud'
-        Windows_NetCore_Record:
-          DisplayName: "Record on Windows for NetCoreApp"
-          OSVmImage: "windows-2019"
-          TestMode: Record
-          TestTargetFramework: netcoreapp2.1
-          AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
-          PostSteps:
-            - task: CopyFiles@2
-              displayName: "Copy Test Recordings"
-              inputs:
-                sourceFolder: '$(Build.SourcesDirectory)'
-                contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
-                targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-            - task: PublishBuildArtifacts@1
-              displayName: "Publish Test Recordings"
-              inputs:
-                pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-                artifactName: SessionRecords
-          SupportedClouds: 'AzureCloud'
+              # Windows_NetCore:
+              #   DisplayName: "Test on Windows for NetCoreApp"
+              #   OSVmImage: "windows-2019"
+              #   TestTargetFramework: netcoreapp2.1
+              # Windows_NetCore_ProjectRefAzureClients:
+              #   DisplayName: "Test on Windows for NetCoreApp with UseProjectReferenceToAzureClients=true"
+              #   OSVmImage: "windows-2019"
+              #   TestTargetFramework: netcoreapp2.1
+              #   AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+              # Windows_NetFramework:
+              #   DisplayName: "Test on Windows for .Net Framework"
+              #   OSVmImage: "windows-2019"
+              #   TestTargetFramework: net461
+              # Windows_NetFramework_ProjectRefAzureClients:
+              #   DisplayName: "Test on Windows for .Net Framework with UseProjectReferenceToAzureClients=true"
+              #   OSVmImage: "windows-2019"
+              #   TestTargetFramework: net461
+              #   AdditionalTestArguments: /p:UseProjectReferenceToAzureClients=true
+              # MacOS:
+              #   DisplayName: "Test on MacOS"
+              #   OSVmImage: "macOS-10.15"
+              #   TestTargetFramework: netcoreapp2.1
+              #   SupportedClouds: 'AzureCloud'
+              # Windows_NetCore_Record:
+              #   DisplayName: "Record on Windows for NetCoreApp"
+              #   OSVmImage: "windows-2019"
+              #   TestMode: Record
+              #   TestTargetFramework: netcoreapp2.1
+              #   AdditionalTestArguments: /p:AutoUpdateSessionRecords=true
+              #   PostSteps:
+              #     - task: CopyFiles@2
+              #       displayName: "Copy Test Recordings"
+              #       inputs:
+              #         sourceFolder: '$(Build.SourcesDirectory)'
+              #         contents: 'sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/**/*.json'
+              #         targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+              #     - task: PublishBuildArtifacts@1
+              #       displayName: "Publish Test Recordings"
+              #       inputs:
+              #         pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+              #         artifactName: SessionRecords
+              #   SupportedClouds: 'AzureCloud'
